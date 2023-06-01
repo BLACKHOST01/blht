@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "*"
 django-tailwind = "*"
+django-fontawesome-6 = "*"
+pillow = "*"
 
 [dev-packages]
 

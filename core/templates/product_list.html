@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body-content %}
+{% load static %}
+{% for product in t%}
+
+    <div class=" rounded-lg overflow-hidden shadow-md md:w-80  ">
+
+
+        <div class="img  bg-black/50 rounded-lg">
+            <img class="w-full object-cover  " src=" {{product.P_image.url}} " alt="" height="100">
+        </div>
+
+
+        <div class="detail-col m-4 ">
+                <div class=" text-xs md:text-base decription-col flex justify-between w-full p-2 font-bold ">
+                        <span>
+                                <div>
+                                        7000
+                                </div>
+                                <div class=" tracking-[-0.1em] capitalize text-white/50">
+                                        per income 24 hour($)
+                                </div>
+                        </span>
+                        <span>
+                                <div>
+                                        7000
+                                </div>
+                                <div class=" tracking-[-0.1em] capitalize text-white/50">
+                                    groos income
+                                </div>
+                        </span>
+                </div>
+
+                <div class="description-price flex justify-between w-full p-2 text-xs md:text-base ">
+                        <span class="font-bold">
+                                468234978
+                        </span>
+                        <button class=" bg-blue-700 px-5 py-2 rounded-lg font-black capitalize">
+                            {{product.product_name}}
+                        </button>
+                </div>
+        </div>
+    </div>
+{%endfor%}
+{% endblock body-content %}

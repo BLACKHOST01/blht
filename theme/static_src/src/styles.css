@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.h-nav{
+        /* @apply ml-16 md:ml-20; */
+}
+
+.ba-gr{
+        @apply bg-gradient-to-tr from-blue-500/50 to-red-600/50;
+}
+.icons{
+        @apply  bg-gradient-to-tl from-blue-500 to-red-500 text-transparent bg-clip-text text-2xl ;
+}
+.txt{
+        @apply  bg-gradient-to-tl from-blue-500 to-red-500 text-transparent bg-clip-text text-2xl ;
+}
+
+#b-c{
+        @apply bg-blue-950 text-white text-2xl;
+}
+
+.log-entries{
+        @apply bg-transparent border mb-4  ;
+}
+
+
+.icons{
+        @apply md:hidden block;
+}
+
+
+.s_i{
+        @apply w-full bg-transparent text-black italic rounded-xl  border-white  ;
+}
