@@ -5,7 +5,7 @@
 	<head>
 		<title>
 			{% block title %}
-				minX
+				minX | {{user}}
 			{% endblock title %}
 		</title>
 		<meta charset="UTF-8">
@@ -21,6 +21,7 @@
 		<div class="mx-auto ">
 			{% block nav %}
 				{% include "regx/header.html" %}
+				
 			{% endblock nav %}
 		</div>
 
@@ -29,18 +30,30 @@
 
 
 
-		<div id="b-c" class="pt-20 w-full min-h-screen flex flex-col items-center  justify-center bg-blue-900/50 ">
+		<div id="b-c" class=" w-full flex flex-col   justify-center bg-blue-900/50 ">
 			{% block body-content %}
-				{% include "regx/body-content.html" %}
+				
 			{% endblock body-content %}
 		</div>
 
 		<!-- footer section  -->
-		<div>
-			{% block footer_content %}
-			  {% include "regx/footer.html"%}
-			{% endblock footer_content %}
-		</div>
+		{% if user.is_authenticated %}
+			
+		{%else%}
+			<div>
+				{% block footer_content %}
+				
+				{% include "regx/footer.html"%}
+				
+
+				{% endblock footer_content %}
+			</div>
+		{% endif %}
+
+
+		<script defer src="{% static 'javascript/jquery.js' %}"></script>
+		<script defer src="{% static 'javascript/js1.js' %}"></script>
+
 
 	</body>
 </html>

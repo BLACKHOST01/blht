@@ -1,8 +1,37 @@
+{% extends "base.html" %}
+
+<!-- {% load static tailwind_tags %}
+{% load fontawesome_6 %}
+{% tailwind_css %}
+{% fontawesome_6_static %}
 {% load static %}
+<title>
+        {% block title %}
+                login
+        {% endblock title %}
+</title> -->
 <script src="{%static 'javascript/js1.js' %}" type="text/javascript"></script>
 
-<form  method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="sumbit">
-</form>
+{% block body-content %}
+        <form  method="POST" class=" flex flex-row gap-9  justify-center items-center h-screen  ">
+                {% csrf_token %}
+                <!-- {{form.as_p}} -->
+                <div class="bg-black hidden px-9 h-screen w-full -translate-x-16 items-center md:flex text-center">
+                        <div>
+                                <img src="{% static 'images/logo1.png'%}" alt="image">
+                        </div>
+                </div>
+               <div class="flex flex-col bg-blue-400/10  p-9 rounded-2xl md:w-2/4 md:mr-9 m-4 w-full gap-10">
+                        <div class="flex flex-col gap-3  text-base">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" value="{{username}}" class="rounded-xl  bg-transparent border-2 shadow-lg  w-full " >
+                        </div>
+
+                        <div class="flex flex-col gap-3 text-base">
+                                <label for="password"> Password</label>
+                                <input type="password" name="password" id="password" class="rounded-xl shadow-lg  border-2 bg-transparent ">
+                        </div>
+                       <button type="submit" class="flex w-full ba-gr text-center justify-center rounded-xl text-base py-2">Login</button>
+               </div>
+        </form>
+{% endblock body-content %}

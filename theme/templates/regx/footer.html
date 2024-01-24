@@ -1,6 +1,13 @@
+{% load static tailwind_tags %}
+{% load fontawesome_6 %}
+{% tailwind_css %}
+{% load static %}
+{% fontawesome_6_static %}
+<script defer src="{% static 'javascript/jquery.js' %}"></script>
+<script defer src="{% static 'javascript/js1.js' %}"></script>
 <footer>
-        <div class="flex justify-between m-9 p-4 gap-9">
-                <div class="f_t w-3/4">
+        <div class="flex md:justify-between md:flex-row flex-col  m-5 p-4 gap-9">
+                <div class="f_t">
                         <div>
                                 <h1>xitcash</h1>
                         </div>

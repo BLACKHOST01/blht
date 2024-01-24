@@ -1,7 +1,8 @@
 {% load static %}
 
 
-<nav class=" capitalize text-xl flex p-4 gap-16 justify-start md:justify-between text-white w-full fixed bottom-0 md:top-0">
+{% block nav %}
+<nav class=" z-50 bg-white/ h-14 backdrop-blur-sm capitalize text-xl flex p-4 gap-16 justify-between text-white w-full fixed bottom-0 md:top-0">
         <div class="hidden md:block ">
              <a href="{% url 'core:home' %}">
                 <img src="{% static 'images/favicon_io/favicon-32x32.png'%}" alt="">
@@ -16,7 +17,7 @@
                                                 <i class=" fas fas fa-exchange-alt "></i>
                                         </span>
                                         <span class="hidden md:inline-block">
-                                                exchange
+                                                market cap
                                         </span>
                                 </a>
                         </li>
@@ -31,28 +32,44 @@
                                 </a>
                         </li>
                         <li class="h-nav">
-                                <a href="#">
+                                <a href="{% url 'core:dashboard' %} ">
                                         <span class="icons">
                                                 <i class="fa-solid fa-user-fas fa-headset"></i>
                                         </span>
                                         <span class="hidden md:inline-block">
-                                                support
+                                                dashboard
                                         </span>
                                 </a>
                         </li>
+                      {% if request.user.is_authenticated %}
                         <li class="h-nav">
-                                <a href="{% url 'core:login' %}">
-                                        <span class="icons">
-                                                <i class="fa-solid fa-sign-in-alt "></i>
-                                        </span>
-                                        <span class="hidden md:inline-block">
-                                                sign in
-                                        </span>
-                                </a>
+                                        <a href="{% url 'core:logout' %}">
+                                                <span class="icons">
+                                                        <i class="fa-solid fa-sign-in-alt "></i>
+                                                </span>
+                                                <span class="hidden md:inline-block">
+                                                        logout
+                                                </span>
+                                        </a>
+                                </li>
+                        
+                      {% else %}
+                        <li class="h-nav">
+                                        <a href="{% url 'core:login' %}">
+                                                <span class="icons">
+                                                        <i class="fa-solid fa-sign-in-alt "></i>
+                                                </span>
+                                                <span class="hidden md:inline-block">
+                                                        sign in
+                                                </span>
+                                        </a>
                         </li>
+                        
+                      {% endif %}
+                      
 
                         <li class="h-nav">
-                                <a href="{% url 'core:signup' %}" class="md:bg-blue-300 md:px-4 md:py-2 md:rounded-full">
+                                <a href="{% url 'core:signup' %}" class="ba-gr md:px-4 md:py-2 md:rounded-xl">
                                         <span class="icons">
                                                 <i class=" fa-fas fa-sign-out-alt "></i>
                                         </span>
@@ -67,3 +84,4 @@
 
 
 </nav>
+{% endblock nav %}

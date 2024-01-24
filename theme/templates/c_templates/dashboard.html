@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+{% load static tailwind_tags %}
+{% load fontawesome_6 %}
+{% tailwind_css %}
+{% load static %}
+{% fontawesome_6_static %}
+
+
+{% block nav %}
+
+{% endblock nav %}
+
+
+
+{% block body-content %}
+<div class="flex justify-between text-center text-md font-sans tracking-wider">
+     <div id="left-side-pane"
+          class="fixed w-screen md:relative z-40 h-[100vh] md:w-1/4 bg-black/60 backdrop-blur-lg  p-2 hidden capitalize overflow-hidden  md:block">
+          <button id="close-btn" onclick="func1()" class="flex md:hidden justify-end w-full p-2 ">
+               <i class="fas fa-xmark"></i>
+          </button>
+
+          <div
+               class="side-bar-content hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+               <div class="flex gap-9 px-4 p-1">
+                    <span>
+                         <i class="fas fa-home"></i>
+                    </span>
+                    <span>
+                         dashboard
+                    </span>
+               </div>
+          </div>
+          <div
+               class="side-bar-contents hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+               <div class="flex gap-9 px-4 p-1">
+                    <span>
+                         <i class="fas fa-border-all"></i>
+                    </span>
+                    <span>
+                         overview
+                    </span>
+               </div>
+          </div>
+
+
+          <div
+               class="side-bar-content hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+               <div class="flex gap-9 px-4 p-1">
+                    <span>
+                         <i class="fas fa-bank"></i>
+                    </span>
+                    <span>
+                         wallet connect
+                    </span>
+               </div>
+          </div>
+
+
+          <div
+               class="side-bar-content hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+               <div class="flex gap-9 px-4 p-1">
+                    <span>
+                         <i class="fas fa-user-large"></i>
+                    </span>
+                    <span>
+                         profile
+                    </span>
+               </div>
+          </div>
+
+
+
+          <div
+               class="side-bar-content hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+               <div class="flex gap-9 px-4 p-1">
+                    <span>
+                         <i class="fab fa-get-pocket"></i>
+                    </span>
+                    <span>
+                         KYC
+                    </span>
+               </div>
+          </div>
+
+
+
+
+          <div
+               class="side-bar-content hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+          
+                    <a href=" {% url 'core:logout' %}  " class="flex gap-9 px-4 p-1">
+                         <span>
+                              <i class="fas fa-lock-open"></i>
+                         </span>
+                         <span>
+                              logout
+                         </span>
+                    </a>
+                   
+               
+          </div>
+
+
+
+          <div
+               class="side-bar-content hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+               <div class="flex gap-9 px-4 p-1">
+                    <span>
+                         <i class="fas fa-box-open"></i>
+                    </span>
+                    <span>
+                         support
+                    </span>
+               </div>
+          </div>
+
+
+          <div class="side-bar-content bg-orange-900 absolute w-full bottom-0 hover:bg-white/30 rounded-lg my-2 hover:translate-x-6 transition-all duration-300">
+               <div class="flex text-sm gap-9 px-4 items-center p-1">
+                    <span>
+                         <i class="fas fa-user-shield"></i>
+                    </span>
+               <div class="text-justify">
+                        {% if request.user.is_authenticated %}
+                              <span>
+                                   {{request.user}}
+                              </span>
+                              <span>
+                                   {{request.user.email}}
+                              </span>
+                                   
+                        {% endif %}
+                        
+               </div>
+               </div>
+          </div>
+
+     </div>
+
+
+     <div id="right-side-pane" class="w-full  md:w-3/4 ">
+          <div class="flex justify-between  bg-blue-900 drop-shadow-2xl  p-2">
+               <button id="open-btn" onclick="func2()" class="flex md:hidden justify-between w-full p-2 ">
+                    <i class="fas fa-bars-staggered"></i>
+               </button>
+               
+               <span class="flex gap-4 p-2">
+                    <!-- <i class="fas fas fa-headset"></i> -->
+                    <i class="fas fas fa-headset"></i>
+                    <i class="fas fas fa-headset"></i>
+               </span>
+          </div>
+          <div
+               class="font-bold text-lg capitalize px-4 py-2 bg-teal-700/90 hover:shadow-md hover:shadow-blue-400 transition-all duration-500 hover:-translate-y-2 m-5 rounded-xl ">
+               <div class="flex justify-between text-sm pb-6">
+                    <h3>balance</h3>
+                    <span>
+                         transaction history
+                    </span>
+               </div>
+               <span>$1000000</span>
+
+               <div class="flex justify-evenly my-4  ">
+                    <span class="flex flex-col gap-2">
+                         <i class="fas fa-plus bg-blue-950 p-3 rounded-full "></i>
+                         <span class="text-xs font-light">add</span>
+                    </span>
+                    <span class="flex flex-col gap-2">
+                         <span>
+                              <i class="fas fas fa-exchange-alt bg-blue-950 p-3 rounded-full "></i>
+                         </span>
+                         <span class="text-xs font-light">transfer</span>
+
+                    </span>
+                    <span class="flex flex-col gap-2">
+                         <span>
+                              <i class="fas fa-arrow-down bg-blue-950 p-3 rounded-full "></i>
+                         </span>
+                         <span class="text-xs font-light">withdraw</span>
+
+                    </span>
+               </div>
+          </div>
+
+
+          <div
+               class="font-bold text-lg capitalize px-4 py-2 bg-blue-200/25 shadodw-xl shadow-blue-4d00/50 transition-all duration-500 hover:-translate-y-2 m-5 rounded-xl">
+               <div class="flex flex-col ">
+                    <div class="flex justify-between">
+                         <span>bitcoin</span>
+                         <span>$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                         <span>
+                              <i class="fab fa-bitcoin fa-2xl"></i>
+                         </span>
+                         <span>0.00 BTC</span>
+                    </div>
+                    <div class="flex gap-6 mt-2">
+                         <span>$25,949487</span>
+                         <span class="text-sm text-green-600">
+                              0.97%
+                         </span>
+
+                    </div>
+               </div>
+          </div>
+
+
+          <div
+               class="font-bold text-lg capitalize px-4 py-2 bg-blue-200/25 shadodw-xl shadow-blue-4d00/50 transition-all duration-500 hover:-translate-y-2 m-5 rounded-xl">
+               <div class="flex flex-col ">
+                    <div class="flex justify-between">
+                         <span>etheruim</span>
+                         <span>$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                         <span>
+                              <i class="fab fab fa-ethereum  fa-2xl"></i>
+                         </span>
+                         <span>0.00 BTC</span>
+                    </div>
+                    <div class="flex gap-6 mt-2">
+                         <span>$25,949487</span>
+                         <span class="text-sm text-green-600">
+                              0.97%
+                         </span>
+
+                    </div>
+               </div>
+          </div>
+
+          <div
+               class="font-bold text-lg capitalize px-4 py-2 bg-blue-200/25 shadodw-xl shadow-blue-4d00/50 transition-all duration-500 hover:-translate-y-2 m-5 rounded-xl">
+               <div class="flex flex-col ">
+                    <div class="flex justify-between">
+                         <span>bitcoin</span>
+                         <span>$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                         <span>
+                              <i class="fab fa-bitcoin fa-2xl"></i>
+                         </span>
+                         <span>0.00 BTC</span>
+                    </div>
+                    <div class="flex gap-6 mt-2">
+                         <span>$25,949487</span>
+                         <span class="text-sm text-green-600">
+                              0.97%
+                         </span>
+
+                    </div>
+               </div>
+          </div>
+
+
+          <div
+               class="font-bold text-lg capitalize px-4 py-2 bg-blue-200/25 shadodw-xl shadow-blue-4d00/50 transition-all duration-500 hover:-translate-y-2 m-5 rounded-xl">
+               <div class="flex flex-col ">
+                    <div class="flex justify-between">
+                         <span>bitcoin</span>
+                         <span>$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                         <span>
+                              <i class="fab fa-bitcoin fa-2xl"></i>
+                         </span>
+                         <span>0.00 BTC</span>
+                    </div>
+                    <div class="flex gap-6 mt-2">
+                         <span>$25,949487</span>
+                         <span class="text-sm text-green-600">
+                              0.97%
+                         </span>
+
+                    </div>
+               </div>
+          </div>
+
+          <div
+               class="font-bold text-lg capitalize px-4 py-2 bg-blue-200/25 shadodw-xl shadow-blue-4d00/50 transition-all duration-500 hover:-translate-y-2 m-5 rounded-xl">
+               <div class="flex flex-col ">
+                    <div class="flex justify-between">
+                         <span>bitcoin</span>
+                         <span>$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                         <span>
+                              <i class="fab fa-bitcoin fa-2xl"></i>
+                         </span>
+                         <span>0.00 BTC</span>
+                    </div>
+                    <div class="flex gap-6 mt-2">
+                         <span>$25,949487</span>
+                         <span class="text-sm text-green-600">
+                              0.97%
+                         </span>
+
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+{% endblock body-content %}
