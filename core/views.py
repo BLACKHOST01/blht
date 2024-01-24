@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, DeleteView, ListView
-from core.models import product, member, category
+from core.models import product, profile, category
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import LoginForm
+# from .forms import LoginForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -109,7 +109,12 @@ class exchangeView(TemplateView):
 
 @login_required
 def dashboard(request):
-    members = member.objects.all()
+    profiles = profile.objects.all()
     
   
-    return render (request, 'c_templates/dashboard.html', {'member': member})
+    return render (request, 'c_templates/dashboard.html', {'profile': profile})
+class profileCreateView(CreateView):
+    model = profile
+    fields = [ 'photo', 'country', 'balance']
+    template_name = "profile/profile_create.html"
+    success_url = reverse_lazy('core:dashboard')

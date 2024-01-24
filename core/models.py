@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
+import uuid
 
 
 # Create your models here.
@@ -52,20 +54,22 @@ class product(models.Model):
 
 
 
-class member(models.Model):
-        user = models.ForeignKey(User, related_name='member', on_delete=models.CASCADE)
+
+                
+                
+class profile(models.Model):
+        id = models.UUIDField(_("id"), primary_key=True, default=uuid.uuid4, editable=False)
         
         photo = models.ImageField( upload_to='profile_images', height_field=None, width_field=None, max_length=None)
-        # balance = models.DecimalField( max_digits=5, decimal_places=2)
-        
-        
+        balance = models.DecimalField( max_digits=5, decimal_places=2)
+        country = models.CharField(max_length=50)
         
 
         def __str__(self):
-                self.user
+                return self.countrypy
 
         class Meta:
                 db_table = ''
                 managed = True
-                verbose_name = 'member'
-                verbose_name_plural = 'members'
+                verbose_name = 'profile'
+                verbose_name_plural = 'profiles'

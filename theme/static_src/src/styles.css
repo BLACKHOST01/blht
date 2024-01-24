@@ -15,7 +15,7 @@
         @apply  bg-gradient-to-tl from-blue-500 to-red-500 text-transparent bg-clip-text text-2xl ;
 }
 .txt{
-        @apply  bg-gradient-to-tl from-blue-500 to-red-500 text-transparent bg-clip-text text-2xl ;
+        @apply  bg-gradient-to-tl from-blue-500 to-red-500 text-transparent bg-clip-text  ;
 }
 
 #b-c{

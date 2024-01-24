@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% load fontawesome_6 %}
+{% tailwind_css %}
+{% load static %}
+{% fontawesome_6_static %}
+{% block body-content %}
+        <div class="pt-40 text-sm ">
+                <form action="" method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="submit" value="sumbit">
+                </form>
+        </div>
+  
+{% endblock body-content %}

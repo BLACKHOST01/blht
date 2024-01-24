@@ -4,7 +4,7 @@ from core.views import(home_view,
                        productCreateView,
                        productList,
                        dashboard)
-
+from .views import profileCreateView
 from django.urls import path
 from . import views
 
@@ -20,7 +20,8 @@ urlpatterns = [
     path("productlist/", productList.as_view(), name='productlist' ),
     path("login/", views.log_in, name='login'),
     path("logout/", views.log_out, name="logout"),
-    path("dashboard/p", views.dashboard, name='dashboard')
+    path("dashboard/p", views.dashboard, name='dashboard'),
+    path("profile/", profileCreateView.as_view(), name="profilecreate")
     
     
     

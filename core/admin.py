@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import category, product, member
+from .models import category, product, profile
 # Register your models here.
 @admin.register(category)
 class categoryAdmin(admin.ModelAdmin):
@@ -16,7 +16,8 @@ class productAdmin(admin.ModelAdmin):
 admin.site.register(product, productAdmin)
 
 
-class memberAdmin(admin.ModelAdmin):
-    list_display = (  'user', 'photo', 'phoneNO', 'country', 'created', )
 
-admin.site.register(member, memberAdmin)
+class profileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'photo', 'balance', 'country',)
+
+admin.site.register(profile, profileAdmin)
