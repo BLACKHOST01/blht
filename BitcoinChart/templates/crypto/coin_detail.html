@@ -1,0 +1,130 @@
+{% extends 'crypto/base.html' %}
+
+{% block coin-content %}
+<div class="flex flex-col md:flex-row w-full h-screen pt-20">
+    <aside class="w-full md:w-1/3 bg-white shadow-lg  h-screen">
+        <div class="p-6">
+            <div class="flex items-center mb-6">
+                <img src="{{ coin.image }}" alt="{{ coin.name }} logo" class="w-16 h-16 mr-4 rounded-full">
+                <h1 class="text-2xl font-bold text-gray-800">{{ coin.name }} <span class="text-gray-500">({{ coin.symbol }})</span></h1>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                <p class="text-xl font-semibold mb-2 text-gray-800">Current Price: <span id="current-price" class="text-blue-600">${{ coin.current_price|floatformat:2 }}</span></p>
+                <p class="text-lg text-gray-700">Market Cap: <span id="market-cap" class="font-medium">${{ coin.market_cap|floatformat:0 }}</span></p>
+                <p class="text-lg text-gray-700">24h Volume: <span id="volume-24h" class="font-medium">${{ coin.volume_24h|floatformat:0 }}</span></p>
+                <p class="text-lg text-gray-700">Circulating Supply: <span id="circulating-supply" class="font-medium">{{ coin.circulating_supply|floatformat:0 }} {{ coin.symbol }}</span></p>
+                <p class="text-lg text-gray-700">All Time High: <span id="ath" class="font-medium">${{ coin.ath|floatformat:2 }}</span></p>
+                <p class="text-lg text-gray-700">ATH Change %: <span id="ath-change-percentage" class="font-medium">{{ coin.ath_change_percentage|floatformat:2 }}%</span></p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold mb-2 text-gray-800">Price Changes</h2>
+                <p class="text-lg text-gray-700">1h Change: <span id="change-1h" class="font-medium">{{ coin.price_change_percentage_1h|floatformat:2 }}%</span></p>
+                <p class="text-lg text-gray-700">24h Change: <span id="change-24h" class="font-medium">{{ coin.price_change_percentage_24h|floatformat:2 }}%</span></p>
+                <p class="text-lg text-gray-700">7d Change: <span id="change-7d" class="font-medium">{{ coin.price_change_percentage_7d|floatformat:2 }}%</span></p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h2 class="text-2xl font-semibold mb-2 text-gray-800">Coin Converter</h2>
+                <div class="flex items-center space-x-4">
+                    <input type="number" id="coinAmount" class="p-2 border rounded" placeholder="Enter amount">
+                    <span class="text-lg">{{ coin.symbol }} =</span>
+                    <span id="usdAmount" class="text-lg font-bold">$0.00</span>
+                </div>
+                <div class="flex items-center space-x-4 mt-2">
+                    <input type="number" id="usdAmount" class="p-2 border rounded" placeholder="Enter USD">
+                    <span class="text-lg">USD =</span>
+                    <span id="coinAmount" class="text-lg font-bold">0.00 {{ coin.symbol }}</span>
+                </div>
+            </div>
+            <div class="mt-6 bg-gray-100 p-4 rounded-lg">
+                <h2 class="text-2xl font-semibold mb-2 text-gray-800">Price Performance</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                        <p class="text-gray-600 text-sm font-bold">24h Low</p>
+                        <p id="low-24h" class=" text-gray-700 text-sm font-bold">${{ coin.low_24h|floatformat:2 }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm font-bold">24h High</p>
+                        <p id="high-24h" class= "text-gray-700 text-sm font-bold">${{ coin.high_24h|floatformat:2 }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm font-bold">7d Low</p>
+                        <p id="low-7d" class="t text-gray-700 text-sm font-bold">${{ coin.low_7d|floatformat:2 }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm font-bold">7d High</p>
+                        <p id="high-7d" class=" text-gray-700 text-sm font-bold">${{ coin.high_7d|floatformat:2 }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <main class="w-full md:w-2/3 h-screen bg-white shadow-lg">
+        
+        <div class="p-6">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Price Chart</h2>
+            <div class="bg-gray-50 p-4 rounded-lg h-[calc(100vh-8rem)]">
+                {{ coin.sparkline|safe }}
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const coinId = "{{ coin.id }}";
+    const socket = new WebSocket(`ws://${window.location.host}/ws/crypto/${coinId}/`);
+
+
+
+
+    const currentPrice = {{ coin.current_price }};
+
+    function convertCoinToUSD() {
+        const coinAmount = document.getElementById('coinAmount').value;
+        const usdAmount = (coinAmount * currentPrice).toFixed(2);
+        document.getElementById('usdAmount').textContent = `$${usdAmount}`;
+    }
+
+    function convertUSDToCoin() {
+        const usdAmount = document.getElementById('usdAmount').value;
+        const coinAmount = (usdAmount / currentPrice).toFixed(8);
+        document.getElementById('coinAmount').textContent = `${coinAmount} {{ coin.symbol }}`;
+    }
+
+    document.getElementById('coinAmount').addEventListener('input', convertCoinToUSD);
+    document.getElementById('usdAmount').addEventListener('input', convertUSDToCoin);
+
+
+    function updateElement(elementId, newValue, oldValue) {
+        const element = document.getElementById(elementId);
+        if (newValue > oldValue) {
+            element.classList.remove('text-red-500');
+            element.classList.add('text-green-500');
+        } else if (newValue < oldValue) {
+            element.classList.remove('text-green-500');
+            element.classList.add('text-red-500');
+        }
+        element.textContent = newValue;
+    }
+
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        updateElement('current-price', `$${data.current_price.toFixed(2)}`, parseFloat(document.getElementById('current-price').textContent.slice(1)));
+        updateElement('market-cap', `$${data.market_cap.toLocaleString()}`, parseFloat(document.getElementById('market-cap').textContent.slice(1).replace(/,/g, '')));
+        updateElement('volume-24h', `$${data.volume_24h.toLocaleString()}`, parseFloat(document.getElementById('volume-24h').textContent.slice(1).replace(/,/g, '')));
+        updateElement('circulating-supply', `${data.circulating_supply.toLocaleString()} ${data.symbol}`, parseFloat(document.getElementById('circulating-supply').textContent.split(' ')[0].replace(/,/g, '')));
+        updateElement('change-1h', `${data.price_change_percentage_1h.toFixed(2)}%`, parseFloat(document.getElementById('change-1h').textContent));
+        updateElement('change-24h', `${data.price_change_percentage_24h.toFixed(2)}%`, parseFloat(document.getElementById('change-24h').textContent));
+        updateElement('change-7d', `${data.price_change_percentage_7d.toFixed(2)}%`, parseFloat(document.getElementById('change-7d').textContent));
+        updateElement('ath', `$${data.ath.toFixed(2)}`, parseFloat(document.getElementById('ath').textContent.slice(1)));
+        zupdateElement('ath-change-percentage', `${data.ath_change_percentage.toFixed(2)}%`, parseFloat(document.getElementById('ath-change-percentage').textContent));
+        updateElement('low-24h', `$${data.low_24h.toFixed(2)}`, parseFloat(document.getElementById('low-24h').textContent.slice(1)));
+        updateElement('high-24h', `$${data.high_24h.toFixed(2)}`, parseFloat(document.getElementById('high-24h').textContent.slice(1)));
+        updateElement('low-7d', `$${data.low_7d.toFixed(2)}`, parseFloat(document.getElementById('low-7d').textContent.slice(1)));
+        updateElement('high-7d', `$${data.high_7d.toFixed(2)}`, parseFloat(document.getElementById('high-7d').textContent.slice(1)));
+        currentPrice = data.current_price;
+        convertCoinToUSD();
+        convertUSDToCoin();
+   };
+</script>
+{% endblock %}

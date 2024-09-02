@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crypto Market</title>
+    <script>
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/crypto/');
+
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            if (data.type === 'crypto_update') {
+                updateCryptoTable(data.data);
+            }
+        };
+
+        function updateCryptoTable(data) {
+            const table = document.getElementById('crypto-table');
+            table.innerHTML = '<tr><th>Name</th><th>Price</th></tr>';
+            data.forEach(crypto => {
+                table.innerHTML += `<tr><td>${crypto.name}</td><td>${crypto.price}</td></tr>`;
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Crypto Market</h1>
+    <table id="crypto-table">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,176 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Cryptocurrency Prices</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      {% load custom_filters %} 
+      {% load static %}
+    
+    </head>
+    <body class="bg-gray-100">
+      <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
+          Cryptocurrency Market
+        </h1>
+
+        {% if error %}
+        <div
+          class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <span class="block sm:inline">{{ error }}</span>
+        </div>
+        {% else %}
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+          <table class="min-w-full leading-normal">
+            <thead>
+              <tr>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  Coin
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  Price
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  1h%
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  24h%
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  7d%
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  Market Cap
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  Volume (24h)
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  Circulating Supply
+                </th>
+
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
+                  last 7d Chart
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for coin in crypto_data %}
+              <tr class="hover:bg-gray-100 cursor-pointer" onclick="window.location='{% url 'BitcoinChart:coin_detail' coin.id%}'">
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <img
+                        class="w-full h-full rounded-full"
+                        src="{{ coin.image }}"
+                        alt="{{ coin.name }}"
+                      />
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-gray-900 whitespace-no-wrap font-semibold">
+                        {{ coin.name }}
+                      </p>
+                      <p class="text-gray-600 whitespace-no-wrap">
+                        {{ coin.symbol|upper }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right"
+                >
+                  <p class="text-gray-900 whitespace-no-wrap font-semibold">
+                    ${{ coin.current_price|floatformat:2 }}
+                  </p>
+                </td>
+                <td
+                  class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right"
+                >
+                  <span
+                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if coin.price_change_percentage_1h >= 0 %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}"
+                  >
+                    {{ coin.price_change_percentage_1h|floatformat:2 }}%
+                  </span>
+                </td>
+                <td
+                  class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right"
+                >
+                  <span
+                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if coin.price_change_percentage_24h >= 0 %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}"
+                  >
+                    {{ coin.price_change_percentage_24h|floatformat:2 }}%
+                  </span>
+                </td>
+                <td
+                  class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right"
+                >
+                  <span
+                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if coin.price_change_percentage_7d >= 0 %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}"
+                  >
+                    {{ coin.price_change_percentage_7d|floatformat:2 }}%
+                  </span>
+                </td>
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                    <p class="text-gray-900 whitespace-no-wrap">${{ coin.market_cap|format_number }}</p>
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                    <p class="text-gray-900 whitespace-no-wrap">${{ coin.total_volume|format_number }}</p>
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                    <p class="text-gray-900 whitespace-no-wrap">{{ coin.circulating_supply|format_number }} {{ coin.symbol|upper }}</p>
+                  </td>
+                <td
+                  class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center"
+                >
+                {% comment %} <svg class="w-24 h-12">
+                    <polyline
+                      fill="none"
+                      stroke="{% if coin.price_change_percentage_7d >= 0 %}green{% else %}red{% endif %}"
+                      stroke-width="2"
+                      points="
+                                          {% for price in coin.sparkline_7d %}
+                                              {% with index=forloop.counter0|multiply:3 %}
+                                                  {% with max_price=coin.sparkline_7d|dictsort:'price'|last %}
+                                                      {% with normalized_price=price|divide:max_price|multiply:50 %}
+                                                          {{ index }},{{ 50|subtract:normalized_price }}
+                                                      {% endwith %}
+                                                  {% endwith %}
+                                              {% endwith %}
+                                          {% endfor %}
+                                      "
+                    />
+                  </svg> {% endcomment %}
+                  {{ coin.sparkline|safe }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+      </div>
+    </body>
+  </html>
+</html>

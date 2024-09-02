@@ -30,28 +30,11 @@
 
 
 
-		<div id="b-c" class=" w-full flex flex-col   justify-center bg-blue-900/50 ">
-			{% block body-content %}
+		<div id="b-c" class=" w-full bg-blue-900 h-screen ">
+			{% block coin-content %}
 				
-			{% endblock body-content %}
+			{% endblock coin-content %}
 		</div>
-
-		<!-- footer section  -->
-		{% if user.is_authenticated %}
-		{% comment %} <div>
-			<h1>there is footer content</h1>
-		</div> {% endcomment %}
-			
-		{%else%}
-			<div>
-				{% block footer_content %}
-				
-				{% include "regx/footer.html"%}
-				
-
-				{% endblock footer_content %}
-			</div>
-		{% endif %}
 
 
 		<script defer src="{% static 'javascript/jquery.js' %}"></script>
